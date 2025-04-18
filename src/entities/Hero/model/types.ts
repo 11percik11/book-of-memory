@@ -147,6 +147,11 @@ import * as yup from 'yup';
     media: string;
   }
 
+  export interface PersonalDataAccept {
+    id: number;
+    description: string;
+  }
+
 
   const imageSchema = yup.object({
     id: yup.number().required(),

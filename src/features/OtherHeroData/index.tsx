@@ -7,22 +7,24 @@ interface OtherHeroDataProps {
 }
 
 export default function OtherHeroData({className}: OtherHeroDataProps) {
+  const category = ["Герои Великой Отечественной войны", "Труженики тыла", "Герои локальных войн", "Герои - ликвидаторы ЧС",];
   return (
     <div className={`${styles.otherHeroData} ${className}`}>
       <div className={styles.otherHeroData__row}>
         <Select
           className={styles.otherHeroData__rowSelect}
-          options={['wer']}
-          title="Воинское звание"
+          options={category}
+          title="Категория героя"
           necessarilySvg
-          placeholder="Воинское звание"
+          placeholder="Нет"
+          showInput = {false}
         />
         <Select
           className={styles.otherHeroData__input}
           options={['rtere']}
           title="Воинское звание"
           necessarilySvg
-          placeholder="Майор"
+          placeholder="Нет"
         />
       </div>
       <div className={styles.otherHeroData__boxDate}>

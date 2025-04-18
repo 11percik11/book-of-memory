@@ -6,7 +6,7 @@ interface DateSelectProps {
   title?: string;
 }
 
-export default function DateSelect({title}: DateSelectProps) {
+export default function DateSelect({ title }: DateSelectProps) {
   const days = [
     "1",
     "2",
@@ -102,27 +102,30 @@ export default function DateSelect({title}: DateSelectProps) {
   return (
     <div className={styles.boxSelect}>
       {title ? <Title text={title} /> : <></>}
-    <div className={styles.dateSelect}>
-      <Select
-        options={days}
-        placeholder="Нет"
-        onSelect={setSelectedDay}
-        className={styles.otherHeroData__BoxBirthDateAt_selectDay}
-        error={error}
+      <div className={styles.dateSelect}>
+        <Select
+          options={days}
+          placeholder="Нет"
+          onSelect={setSelectedDay}
+          className={styles.otherHeroData__BoxBirthDateAt_selectDay}
+          error={error}
+          showInput={false}
         />
-      <Select
-        options={months}
-        placeholder="Нет"
-        onSelect={setSelectedMonth}
-        className={styles.otherHeroData__BoxBirthDateAt_selectMonth}
+        <Select
+          options={months}
+          placeholder="Нет"
+          onSelect={setSelectedMonth}
+          className={styles.otherHeroData__BoxBirthDateAt_selectMonth}
+          showInput={false}
         />
-      <Select
-        options={years}
-        placeholder="Нет"
-        onSelect={setSelectedYear}
-        className={styles.otherHeroData__BoxBirthDateAt_selectYear}
+        <Select
+          options={years}
+          placeholder="Нет"
+          onSelect={setSelectedYear}
+          className={styles.otherHeroData__BoxBirthDateAt_selectYear}
+          showInput={false}
         />
+      </div>
     </div>
-        </div>
   );
 }

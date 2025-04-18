@@ -13,6 +13,12 @@
     margin-top: 8px;
     font-weight: 600;
   }
+
+  &__input {
+    background: none;
+    font-size: 16px;
+    width: 100%;
+  }
 }
 .selectContainer {
   height: 88px;
@@ -35,6 +41,14 @@
     &:hover {
       border-color: #888;
     }
+
+    @media (max-width: 500px) {
+      padding: 12px;
+    }
+  }
+
+  .selectPlacholder {
+    color: #8B8785;
   }
   
   .arrow {
@@ -49,7 +63,7 @@
   .selectList {
     position: absolute;
     width: 100%;
-    margin-top: 4px;
+    margin-top: 16px;
     padding: 12px 12px 12px 0;
     background-color: #FFF9E0;
     border-radius: $btn-border-radius;

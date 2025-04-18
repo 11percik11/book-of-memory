@@ -11,6 +11,7 @@ interface SelectProps {
   error?: string;
   title?: string;
   necessarilySvg?: boolean;
+  showInput?: boolean; // New prop to control input visibility
 }
 
 const Select: React.FC<SelectProps> = ({
@@ -21,17 +22,26 @@ const Select: React.FC<SelectProps> = ({
   error,
   title,
   necessarilySvg = false,
+  showInput = true, // Default to true for backward compatibility
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState(""); // New state for input value
   const selectRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (option: string) => {
     setSelectedOption(option);
+    setInputValue(option); // Update input value when option is selected
     setIsOpen(false);
     if (onSelect) onSelect(option);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    setSelectedOption(e.target.value);
+    if (onSelect) onSelect(e.target.value);
   };
 
   useEffect(() => {
@@ -54,8 +64,24 @@ const Select: React.FC<SelectProps> = ({
     <div className={`${styles.boxSelect} ${className}`}>
       {title ? <Title text={title} necessarilySvg={necessarilySvg} /> : <></>}
       <div className={`${styles.selectContainer}`} ref={selectRef}>
-        <div className={styles.selectHeader} onClick={toggleDropdown}>
-          {selectedOption || placeholder}
+        <div className={`${styles.selectHeader} ${!selectedOption ? styles.selectPlacholder : ""}`} onClick={toggleDropdown}>
+          {showInput ? (
+            <input 
+              placeholder={placeholder} 
+              className={styles.boxSelect__input} 
+              value={inputValue} 
+              onChange={handleInputChange}
+              type="text" 
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsOpen(!isOpen);
+              }}
+            />
+          ) : (
+            <div className={styles.boxSelect__display}>
+              {selectedOption || placeholder}
+            </div>
+          )}
           <span className={`${styles.arrow} ${isOpen ? styles.open : ""}`}>
             <img src={cross_select} alt="" />
           </span>
@@ -63,7 +89,7 @@ const Select: React.FC<SelectProps> = ({
         {isOpen && (
           <div className={styles.selectList}>
             <div className={styles.optionsContainer}>
-              <div key={0} onClick={() => handleOptionClick(placeholder)} className={styles.optionPlaceholder}>{placeholder}</div>
+              <div key={0} onClick={() => handleOptionClick('')} className={styles.optionPlaceholder}>{placeholder}</div>
               {options.map((option, index) => (
                 <div
                   key={index + 1}

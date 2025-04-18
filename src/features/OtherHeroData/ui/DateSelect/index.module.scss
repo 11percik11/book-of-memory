@@ -13,6 +13,10 @@
 .otherHeroData__BoxBirthDateAt_selectDay {
     width: 106px;
     flex: 0 0 auto;
+
+    @media (max-width: 500px) {
+        width: 87px;
+    }
 }
 
 .otherHeroData__BoxBirthDateAt_selectMonth {
@@ -23,4 +27,8 @@
 .otherHeroData__BoxBirthDateAt_selectYear {
     width: 116px;
     flex: 0 0 auto;
+
+    @media (max-width: 500px) {
+        width: 100px;
+    }
 }

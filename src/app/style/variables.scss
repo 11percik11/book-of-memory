@@ -1,3 +1,5 @@
+@use './fonts.scss';
+
 $text-color-white: #FFFFFF;
 $text-color-black: #2B2A29;
 $text-color-silver: #464444;
@@ -10,6 +12,4 @@ $black: #000000;
 
 $btn-border-radius: 12px;
 
-// $btn-font-size: 24px !default;
-
-$font-open-regular: OpenSansRegular, sans-serif; 
+$font-open-regular: "RobotoSlab", sans-serif;

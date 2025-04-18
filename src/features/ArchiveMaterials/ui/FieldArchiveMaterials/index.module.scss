@@ -4,6 +4,7 @@
     gap: 20px;
     align-items: center;
     margin-top: 20px;
+    height: 168px;
 
     &__boxPlusImg {
         display: flex;
@@ -44,6 +45,10 @@
             border-radius: 4px;
           }
     }
+
+    &__previewVideo {
+        object-fit: cover;
+    }
 }
 
 .BoxImg {
@@ -62,9 +67,5 @@
         top: -15px;
         right: -15px;
         cursor: pointer;
-    }
-
-    &__CrossBalck {
-
     }
 }

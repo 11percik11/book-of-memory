@@ -5,33 +5,49 @@ import { useDropzone } from "react-dropzone";
 import crossblack from "../../../../shared/assets/svg/crossblack.svg";
 
 export default function FieldArchiveMaterials() {
-  const [images, setImages] = useState<string[]>([]);
+  const [files, setFiles] = useState<Array<{ url: string; type: 'image' | 'video' }>>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const MAX_IMAGES = 10; // Maximum number of images allowed
-  console.log(images);
-  console.log(images);
-    
+  const MAX_FILES = 10;
+  const MAX_IMAGE_SIZE = 8 * 1024 * 1024; // 8MB
+  const MAX_VIDEO_SIZE = 100 * 1024 * 1024; // 100MB
+  
   const onDrop = (acceptedFiles: File[]) => {
-    // Calculate how many more images we can add
-    const remainingSlots = MAX_IMAGES - images.length;
+    const remainingSlots = MAX_FILES - files.length;
     if (remainingSlots <= 0) return;
-    const imageFiles = acceptedFiles.filter((file) =>
-      file.type.match("image.*")
-    ).slice(0, remainingSlots); // Only take as many as we can fit
     
-    if (imageFiles.length === 0) return;
+    const filteredFiles = acceptedFiles.slice(0, remainingSlots).filter((file) => {
+      if (file.type.match('image.*')) {
+        if (file.size > MAX_IMAGE_SIZE) {
+          alert(`Image ${file.name} is too large (max ${MAX_IMAGE_SIZE/1024/1024}MB)`);
+          return false;
+        }
+        return true;
+      } else if (file.type.match('video.*')) {
+        if (file.size > MAX_VIDEO_SIZE) {
+          alert(`Video ${file.name} is too large (max ${MAX_VIDEO_SIZE/1024/1024}MB)`);
+          return false;
+        }
+        return true;
+      }
+      return false;
+    });
 
-    const newImages = [...images];
+    if (filteredFiles.length === 0) return;
+
+    const newFiles = [...files];
     let loadedCount = 0;
 
-    imageFiles.forEach((file) => {
+    filteredFiles.forEach((file) => {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-          newImages.push(event.target.result as string);
+          newFiles.push({
+            url: event.target.result as string,
+            type: file.type.match('video.*') ? 'video' : 'image'
+          });
           loadedCount++;
-          if (loadedCount === imageFiles.length) {
-            setImages(newImages);
+          if (loadedCount === filteredFiles.length) {
+            setFiles(newFiles);
           }
         }
       };
@@ -43,19 +59,20 @@ export default function FieldArchiveMaterials() {
     noClick: true,
     noKeyboard: true,
     accept: {
-      "image/*": [".jpeg", ".jpg", ".png", ".gif"],
+      'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
+      'video/*': ['.mp4', '.mov', '.avi', '.mkv']
     },
     onDrop,
   });
 
   const triggerFileInput = () => {
-    if (images.length < MAX_IMAGES) {
+    if (files.length < MAX_FILES) {
       fileInputRef.current?.click();
     }
   };
 
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0 && images.length < MAX_IMAGES) {
+    if (e.target.files && e.target.files.length > 0 && files.length < MAX_FILES) {
       onDrop(Array.from(e.target.files));
       if (fileInputRef.current) {
         fileInputRef.current.value = "";
@@ -63,13 +80,13 @@ export default function FieldArchiveMaterials() {
     }
   };
 
-  const handleRemoveImage = (indexToRemove: number) => {
-    setImages(images.filter((_, index) => index !== indexToRemove));
+  const handleRemoveFile = (indexToRemove: number) => {
+    setFiles(files.filter((_, index) => index !== indexToRemove));
   };
 
   return (
     <div className={styles.fieldArchiveMaterials}>
-      {images.length < MAX_IMAGES && (
+      {files.length < MAX_FILES && (
         <div
           {...getRootProps()}
           className={styles.fieldArchiveMaterials__boxPlusImg}
@@ -81,23 +98,33 @@ export default function FieldArchiveMaterials() {
             type="file"
             ref={fileInputRef}
             onChange={handleFileInputChange}
-            accept="image/*"
+            accept="image/*, video/*"
             multiple
             style={{ display: "none" }}
           />
         </div>
       )}
       <div className={styles.fieldArchiveMaterials__slider}>
-        {images.length > 0 ? (
-          images.map((img, index) => (
+        {files.length > 0 ? (
+          files.map((file, index) => (
             <div key={index} className={styles.BoxImg}>
-              <img
-                src={img}
-                alt={`Preview ${index}`}
-                className={`${styles.fieldArchiveMaterials__imgArr} ${styles.previewImage}`}
-              />
+              {file.type === 'image' ? (
+                <img
+                  src={file.url}
+                  alt={`Preview ${index}`}
+                  className={`${styles.fieldArchiveMaterials__imgArr} ${styles.previewImage}`}
+                />
+              ) : (
+                <video 
+                  className={`${styles.fieldArchiveMaterials__imgArr} ${styles.fieldArchiveMaterials__previewVideo}`}
+                  controls
+                >
+                  <source src={file.url} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              )}
               <div
-                onClick={() => handleRemoveImage(index)}
+                onClick={() => handleRemoveFile(index)}
                 className={styles.BoxImg__boxSvg}
               >
                 <img

@@ -1,0 +1,35 @@
+@use '../../../app/style/variables.scss' as *;
+
+.button {
+    white-space: nowrap;
+    height: 64px;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: $btn-border-radius;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    padding: 0 10px;
+    letter-spacing: 2px;
+    cursor: pointer; 
+
+    &__red {
+       background: #80011F;
+       color: #FFFFFF; 
+    }
+
+    &__white {
+        background: #FFF9E0;
+        color: #2B2A29; 
+    }
+
+    &__disabled {
+        opacity: 0.7;
+        cursor: no-drop;
+     }
+
+     &_svg {
+        margin-right: 17px;
+     } 
+}

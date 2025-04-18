@@ -1,0 +1,34 @@
+@use '../../app/style/variables.scss' as *;
+
+.header {
+    // padding-top: 40px;
+    // margin: 0 32px;
+
+    &__title {
+        font-size: 64px;
+        font-size: clamp(32px, 4vw, 64px);
+        font-weight: 700;
+    }
+
+    &__description {
+        letter-spacing: 1px;
+        margin-top: 16px;
+        font-size: 32px;
+        font-size: clamp(16px, 2.5vw, 32px);
+        word-break: break-word;
+
+        // @media (max-width: 1200px) {
+        //     font-size: 24px;
+        // }
+
+        // @media (max-width: 400px) {
+        //     font-size: 16px;
+        // }
+    }
+
+    &__word {
+        font-size: clamp(16px, 2.5vw, 32px);
+        font-weight: 700;
+        color: $text-color-red;
+    }
+}

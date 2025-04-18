@@ -1,0 +1,45 @@
+@use '../../../../app/style/variables.scss' as *;
+ 
+.containerDate {
+    display: flex;
+    gap: 24px;
+    padding: 24px;
+    background-color: #FCEFD6;
+    border-radius: $btn-border-radius;
+    align-items: stretch;
+
+    &__boxSelectInput {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 50%;
+
+        @media (max-width: 700px) {
+            width: auto;
+        }
+    }
+
+    &__textArea {
+        width: calc(50% + 124px);
+        min-width: 0;
+
+        @media (max-width: 700px) {
+            width: auto;
+        }
+    }
+
+    &__button {
+        width: 96px;
+        align-self: stretch;
+        height: 244px;
+
+        @media (max-width: 700px) {
+            width: auto;
+            height: 80px;
+        }
+    }
+
+    @media (max-width: 700px) {
+        flex-direction: column;
+    }
+}

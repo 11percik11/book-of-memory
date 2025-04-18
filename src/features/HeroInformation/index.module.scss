@@ -1,0 +1,19 @@
+.heroInformation {
+    width: 100%;
+    // padding-left: 20px;
+    
+    &__box {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+
+      @media (max-width: 1200px) {
+        flex-direction: column;
+        gap: 35px;
+      }
+    }
+
+    &__input {
+      flex: 1 0 calc(50% - 40px);
+    }
+}

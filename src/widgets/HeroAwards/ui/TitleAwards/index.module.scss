@@ -1,0 +1,17 @@
+@use '../../../../app/style/variables.scss' as *;
+
+.titleAwards {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    
+    &__h2 {
+        font-weight: 700;
+        font-size: clamp(32px, 3vw, 40px);
+    }
+
+    &__text {
+        color: $text-color-silver;
+        font-size: clamp(16px, 1.6vw, 20px);
+    }
+}

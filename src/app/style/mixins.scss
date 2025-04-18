@@ -1,0 +1,19 @@
+// @use 'sass:color';
+
+// @mixin button-base {
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
+//   border: none;
+//   cursor: pointer;
+//   white-space: nowrap;
+// }
+
+// @mixin button-variant($bg: none, $color: black, $hover-darken: 15%) {
+//   background: $bg;
+//   color: $color;
+  
+//   &:hover {
+//     background-color: color.adjust($bg, $lightness: -$hover-darken);
+//   }
+// }

@@ -1,0 +1,68 @@
+@use "../../../app/style/variables.scss" as *;
+
+.slider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  background-image: url("data:image/svg+xml;utf8,<svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' rx='12' ry='12' style='fill: none; stroke: %23464444; stroke-width: 1; stroke-dasharray: 18 13'/></svg>");
+  border-radius: $btn-border-radius;
+  overflow: hidden;
+
+  &__slide {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__arrowLeft,
+  &__arrowRight {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    outline: none;
+  }
+
+  &__arrowLeft {
+    left: 15px;
+  }
+
+  &__arrowRight {
+    right: 15px;
+  }
+
+  &__image {
+    width: 100%;
+    // height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease;
+  }
+
+  &__boxText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__text1 {
+    margin: 16px 0 8px 0;
+  }
+
+  &__text2 {
+    font-size: 12px;
+    color: $text-color-silver_white;
+  }
+}

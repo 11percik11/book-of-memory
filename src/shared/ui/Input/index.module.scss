@@ -1,0 +1,30 @@
+@use '../../../app/style/variables.scss' as *;
+
+.containeriInput {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    color: black;
+    font-size: 16px;
+    height: 64px;
+    background: none;
+    border-radius: $btn-border-radius;
+    border: 1px solid $text-color-silver;
+    padding: 0 20px;
+
+    &::placeholder {
+        color: $text-color-silver_white;
+        opacity: 1;
+    }
+
+    &:-ms-input-placeholder {
+        color: $text-color-silver_white;
+    }
+    
+    &::-ms-input-placeholder {
+        color: $text-color-silver_white;
+    }
+}

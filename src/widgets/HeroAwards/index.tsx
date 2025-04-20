@@ -1,36 +1,43 @@
-import { useState } from 'react';
 import TitleAwards from './ui/TitleAwards';
 import ContainerDate from './ui/ContainerDate';
 import styles from './index.module.scss';
 import { Button } from '../../shared/ui';
 import plus_svg from '../../shared/assets/svg/plus.svg';
 
-export default function HeroAwards() {
-  const [containers, setContainers] = useState([0]);
+interface Fields {
+  id: string;
+  year: string;
+  title: string;
+}
 
-  const addContainer = () => {
-    setContainers(prev => [...prev, Date.now()]);
-  };
+interface HeroAwardsProps {
+  fields: Fields[];
+  onRemove: (id: number) => void;
+  onAppend: (data: { year: string; title: string }) => void;
+}
 
-  const removeContainer = (id: number) => {
-    setContainers(prev => prev.filter(item => item !== id));
+export default function HeroAwards({fields, onRemove, onAppend}: HeroAwardsProps) {
+
+  const handleAppend = () => {
+    onAppend({ year: '', title: '' });
   };
 
   return (
     <div className={styles.heroAwards}>
       <TitleAwards />
       
-      {containers.map(id => (
+      {fields.map((field, index) => (
         <ContainerDate 
-          key={id}
-          onRemove={() => removeContainer(id)}
+          key={field.id}
+          onRemove={() => onRemove(index)}
+          index={index}
         />
       ))}
       
       <Button 
         className={styles.heroAwards__button} 
         svg={plus_svg}
-        onClick={addContainer}
+        onClick={handleAppend}
       >
         ДОБАВИТЬ НАГРАДУ
       </Button>

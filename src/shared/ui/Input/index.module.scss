@@ -2,29 +2,46 @@
 
 .containeriInput {
     width: 100%;
+    height: 136px;
     display: flex;
     flex-direction: column;
-}
 
-.input {
-    color: black;
-    font-size: 16px;
-    height: 64px;
-    background: none;
-    border-radius: $btn-border-radius;
-    border: 1px solid $text-color-silver;
-    padding: 0 20px;
-
-    &::placeholder {
-        color: $text-color-silver_white;
-        opacity: 1;
-    }
-
-    &:-ms-input-placeholder {
-        color: $text-color-silver_white;
-    }
+    &__input {
+        color: black;
+        font-size: 16px;
+        height: 64px;
+        background: none;
+        border-radius: $btn-border-radius;
+        border: 1px solid $text-color-silver;
+        padding: 0 20px;
     
-    &::-ms-input-placeholder {
-        color: $text-color-silver_white;
+        &::placeholder {
+            color: $text-color-silver_white;
+            opacity: 1;
+        }
+    
+        &:-ms-input-placeholder {
+            color: $text-color-silver_white;
+        }
+        
+        &::-ms-input-placeholder {
+            color: $text-color-silver_white;
+        }
+    
+        &:-webkit-autofill,
+        &:-webkit-autofill:hover, 
+        &:-webkit-autofill:focus,
+        &:-webkit-autofill:active {
+        -webkit-text-fill-color: #000 !important;
+        -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+    }
+
+    &__error {
+        color: #E60004;
+        font-weight: 400;
+        font-size: 12px;
+        margin-top: 8px;
     }
 }

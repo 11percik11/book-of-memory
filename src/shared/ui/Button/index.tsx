@@ -31,7 +31,6 @@ export default function Button({
 }: ButtonProps)  {
   return (
     <button
-      onClickCapture={() => console.log('Click')}
       type={type}
       className={`${styles.button} ${styles[`button__${variant}`]} ${disabled ? styles.button__disabled : ''} ${className}`}
       onClick={onClick}

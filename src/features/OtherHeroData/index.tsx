@@ -52,6 +52,7 @@ export default function OtherHeroData({ className }: OtherHeroDataProps) {
     <div className={`${styles.otherHeroData} ${className}`}>
       <div className={styles.otherHeroData__row}>
         <Select
+          name="herocategory"
           className={styles.otherHeroData__rowSelect}
           options={category}
           title="Категория героя"
@@ -61,6 +62,7 @@ export default function OtherHeroData({ className }: OtherHeroDataProps) {
           showInput={false}
         />
         <Select
+          name="militaryrank"
           className={styles.otherHeroData__input}
           options={militaryRankTitles}
           title="Воинское звание"
@@ -69,8 +71,8 @@ export default function OtherHeroData({ className }: OtherHeroDataProps) {
         />
       </div>
       <div className={styles.otherHeroData__boxDate}>
-        <DateSelect title="Дата рождения" />
-        <DateSelect title="Дата смерти" />
+        {/* <DateSelect title="Дата рождения" />
+        <DateSelect title="Дата смерти" /> */}
       </div>
     </div>
   );

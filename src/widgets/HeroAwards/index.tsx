@@ -8,18 +8,19 @@ interface Fields {
   id: string;
   year: string;
   title: string;
+  descriptionMilitary: string
 }
 
 interface HeroAwardsProps {
   fields: Fields[];
   onRemove: (id: number) => void;
-  onAppend: (data: { year: string; title: string }) => void;
+  onAppend: (data: { year: string; title: string, descriptionMilitary: string }) => void;
 }
 
 export default function HeroAwards({fields, onRemove, onAppend}: HeroAwardsProps) {
 
   const handleAppend = () => {
-    onAppend({ year: '', title: '' });
+    onAppend({ year: '', title: '', descriptionMilitary: '' });
   };
 
   return (

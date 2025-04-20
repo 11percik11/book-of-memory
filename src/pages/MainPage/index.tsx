@@ -1,6 +1,6 @@
 import { FormProvider, useFieldArray, useForm } from "react-hook-form";
 import Header from "../../widgets/Header";
-// import InformationField from "../../widgets/InformationField";
+import InformationField from "../../widgets/InformationField";
 import styles from "./index.module.scss";
 import HeroAwards from "../../widgets/HeroAwards";
 import SendlerInformation from "../../widgets/SendlerInformation";
@@ -16,7 +16,9 @@ export default function MainPage() {
       name: '',
       patronymic: '',
       phone: '',
-      awards: [{ year: '', title: '' }] // Добавьте начальные значения для всех обязательных полей
+      awards: [{ year: '', title: '', descriptionMilitary: '' }],
+      images: [], 
+      archive: [],
     }
   });
 
@@ -41,12 +43,12 @@ export default function MainPage() {
       <hr className={styles.hrLine} />
       <FormProvider {...methods}>
         <form onSubmit={methods.handleSubmit(onSubmit)}>
-          {/* <InformationField /> */}
+          <InformationField />
           <hr className={styles.hrLine} />
           <HeroAwards 
           fields={fields}
           onRemove={remove}
-          onAppend={() => append({ year: '', title: '' })}
+          onAppend={() => append({ year: '', title: '', descriptionMilitary: '' })}
           />
           <hr className={styles.hrLine} />
           <SendlerInformation/>

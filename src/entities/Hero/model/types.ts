@@ -165,6 +165,39 @@ const regExpPhone: RegExp = new RegExp(/^\+?[1-9][0-9]{7,14}$/)
 const regExpLetters: RegExp = new RegExp(/^[a-zA-Zа-яА-ЯёЁ\s]+$/)
 
 export const schema = yup.object().shape({
+  herosurname: yup.string()
+  .required('Фамилия обязательна')
+  .matches(regExpLetters, 'Не должно содержать цифр и спецсимволов'),
+  heroname: yup.string()
+  .required('Имя обязательно')
+  .matches(regExpLetters, 'Не должно содержать цифр и спецсимволов'),
+  heropatronymic: yup.string()
+  .test('patronymic', 'Не должно содержать цифр и спецсимволов', 
+    (v) => !v?.trim() || regExpLetters.test(v))
+  .nullable()
+  .notRequired(),
+  placebirth: yup.string(),
+  herocategory: yup.string()
+  .required('Год обязателен'),
+  militaryrank: yup.string(),
+  
+  images: yup.array().of(
+    yup.object().shape({
+      id: yup.number(),
+      image: yup.string(),
+      applicationForm: yup.string().url('Должна быть валидная ссылка'),
+      imageFile: yup.string()
+    })
+  ),
+  archive: yup.array().of(
+    yup.object().shape({
+      id: yup.number(),
+      image: yup.string(),
+      applicationForm: yup.string().url('Должна быть валидная ссылка'),
+      imageFile: yup.string()
+    })
+  ),
+
   surname: yup.string()
   .required('Фамилия обязательна')
   .matches(regExpLetters, 'Не должно содержать цифр и спецсимволов'),
@@ -189,9 +222,11 @@ export const schema = yup.object().shape({
         // .max(new Date().getFullYear(), 'Год не может быть в будущем')
         // .min(1900, 'Год не может быть меньше 1900'),
       title: yup.string()
-      .required('Название награды обязательно')
+      .required('Название награды обязательно'),
+      descriptionMilitary: yup.string()
     })
-  )
+  ),
+  additionalInformation: yup.string(),
 });
 
 const imageSchema = yup.object({

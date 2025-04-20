@@ -7,15 +7,21 @@ import { useDropzone } from 'react-dropzone';
 
 interface ImageSliderProps {
   className?: string;
+  value?: Array<{ id?: number; image: string; applicationForm?: string; imageFile?: string }>;
+  onChange?: (images: Array<{ id?: number; image: string; applicationForm?: string; imageFile?: string }>) => void;
 }
 
-const ImageSlider: React.FC<ImageSliderProps> = ({className}: ImageSliderProps) => {
+const ImageSlider: React.FC<ImageSliderProps> = ({ className, value = [], onChange }: ImageSliderProps) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const maxImgValue = 10;
   const maxFileSize = 8 * 1024 * 1024;
   const [images, setImages] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  // useEffect(() => {
+  //   setImages(value.map(item => item.image));
+  // }, [value]);
+  
   const onDrop = (acceptedFiles: File[]) => {
     if (images.length + acceptedFiles.length > maxImgValue) {
       return;
@@ -27,20 +33,25 @@ const ImageSlider: React.FC<ImageSliderProps> = ({className}: ImageSliderProps) 
     
     if (imageFiles.length === 0) return;
 
-    
-    
     const newImages = [...images];
+    const newImageObjects = [...value];
     let loadedCount = 0;
     
     imageFiles.forEach(file => {
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
-          newImages.push(event.target.result as string);
+          const imageUrl = event.target.result as string;
+          newImages.push(imageUrl);
+          newImageObjects.push({
+            image: imageUrl,
+            imageFile: file.name
+          });
           loadedCount++;
           if (loadedCount === imageFiles.length) {
             setImages(newImages);
             setCurrentIndex(newImages.length - 1);
+            onChange?.(newImageObjects);
           }
         }
       };
@@ -74,7 +85,9 @@ const ImageSlider: React.FC<ImageSliderProps> = ({className}: ImageSliderProps) 
   const triggerFileDelete = () => {
     if (images.length === 0) return;
     const newImages = images.filter((_, index) => index !== currentIndex);
+    const newImageObjects = value.filter((_, index) => index !== currentIndex);
     setImages(newImages);
+    onChange?.(newImageObjects);
     
     if (newImages.length === 0) {
       setCurrentIndex(0); 

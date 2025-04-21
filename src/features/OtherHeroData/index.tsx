@@ -53,7 +53,7 @@ export default function OtherHeroData({ className }: OtherHeroDataProps) {
       <div className={styles.otherHeroData__row}>
         <Select
           name="herocategory"
-          className={styles.otherHeroData__rowSelect}
+          className={`${styles.otherHeroData__rowSelect} ${styles.otherHeroData__input}`}
           options={category}
           title="Категория героя"
           necessarilySvg
@@ -63,16 +63,14 @@ export default function OtherHeroData({ className }: OtherHeroDataProps) {
         />
         <Select
           name="militaryrank"
-          className={styles.otherHeroData__input}
+          className={`${styles.otherHeroData__input} ${styles.otherHeroData__input}`}
           options={militaryRankTitles}
           title="Воинское звание"
           necessarilySvg
           placeholder="Нет"
         />
-      </div>
-      <div className={styles.otherHeroData__boxDate}>
-        {/* <DateSelect title="Дата рождения" />
-        <DateSelect title="Дата смерти" /> */}
+        <DateSelect className={styles.otherHeroData__input}  name="birthDateAt" title="Дата рождения" />
+        <DateSelect className={styles.otherHeroData__input} name="deathDateAt" title="Дата смерти" />
       </div>
     </div>
   );

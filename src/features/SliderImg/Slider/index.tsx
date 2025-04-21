@@ -36,6 +36,7 @@ const Slider: React.FC<SliderProps> = ({
         <>
           {images.length != 1 ? (
             <button
+              type="button"
               className={styles.slider__arrowLeft}
               onClick={goToPrevious}
               aria-label="Previous image"
@@ -58,6 +59,7 @@ const Slider: React.FC<SliderProps> = ({
           </div>
           {images.length != 1 ? (
             <button
+              type="button"
               className={styles.slider__arrowRight}
               onClick={goToNext}
               aria-label="Next image"

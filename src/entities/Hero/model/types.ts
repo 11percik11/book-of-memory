@@ -180,6 +180,8 @@ export const schema = yup.object().shape({
   herocategory: yup.string()
   .required('Год обязателен'),
   militaryrank: yup.string(),
+  birthDateAt: yup.string(),
+  deathDateAt: yup.string(),
   
   images: yup.array().of(
     yup.object().shape({
@@ -213,14 +215,24 @@ export const schema = yup.object().shape({
     .required('Телефон обязателен')
     .min(11, 'Номер телефона слишком короткий (должно быть 11 символов)')
     .max(11, 'Номер телефона слишком длинный (должно быть 11 символов)')
-    .matches(regExpPhone, 'Неверный формат телефона'), 
+    .matches(regExpPhone, 'Неверный формат телефона'),
+    organization: yup.string()
+    .required('Организация обязателена'),   
   awards: yup.array().of(
     yup.object().shape({
       year: yup.string()
-        .required('Год обязателен')
-        .typeError('Год должен быть числом'),
-        // .max(new Date().getFullYear(), 'Год не может быть в будущем')
-        // .min(1900, 'Год не может быть меньше 1900'),
+    .required('Год обязателен')
+    .matches(/^\d{4}$/, 'Год должен состоять из 4 цифр')
+    .test(
+        'min-year',
+        'Год не может быть меньше 1900',
+        (value) => parseInt(value, 10) >= 1900
+    )
+    .test(
+        'max-year',
+        'Год не может быть в будущем',
+        (value) => parseInt(value, 10) <= new Date().getFullYear()
+    ),
       title: yup.string()
       .required('Название награды обязательно'),
       descriptionMilitary: yup.string()

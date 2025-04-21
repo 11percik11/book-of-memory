@@ -1,21 +1,18 @@
 .otherHeroData {
-    display: flex;
-    flex-wrap: wrap;
-    // padding-left: 20px;
     width: 100%;
-    
     &__row {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
         gap: 20px;
 
-        &__rowSelect {
-            width: 100%;
-        }
+        // &__rowSelect {
+        //     width: 100%;
+        // }
         
-        &:last-child {
-          margin-bottom: 0;
-        }
+        // &:last-child {
+        //   margin-bottom: 0;
+        // }
 
         @media (max-width: 700px) {
             flex-direction: column;
@@ -23,32 +20,7 @@
         }
     }
 
-    &__BoxBirthDateAt {
-        width: 50%;
-        display: flex;
-        gap: 8px;
-
-
-        &_selectDay {
-            width: 114px;
-        }
-
-        &_selectMonth {
-            width: 100%;
-        }
-
-        &_selectYear {
-            width: 114px;
-        }
-    }
-
-    &__boxDate {
-        display: flex;
-        width: 100%;
-        gap: 20px;
-
-        @media (max-width: 750px) {
-            flex-direction: column;
-        }
-    }
+    &__input {
+        flex: 1 0 calc(50% - 40px);
+      }
 }

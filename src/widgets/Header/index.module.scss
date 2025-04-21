@@ -8,12 +8,17 @@
     }
 
     &__description {
-        letter-spacing: 1px;
-        margin-top: 16px;
+        line-height: 39px;
+        line-height: clamp(16px, 2.5vw, 39px);;
+        margin-top: 29px;
         font-size: 32px;
         font-size: clamp(16px, 2.5vw, 32px);
         word-break: break-word;
         color: $text-color-silver;
+
+        @media (max-width: 100px) {
+            
+        }
     }
 
     &__word {

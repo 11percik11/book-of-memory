@@ -3,7 +3,7 @@
 .containerDate {
     display: flex;
     gap: 24px;
-    padding: 24px;
+    padding: 27px 26px 0px 24px;
     background-color: #FCEFD6;
     border-radius: $btn-border-radius;
     align-items: stretch;
@@ -14,7 +14,7 @@
         justify-content: space-between;
         width: 50%;
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
             width: auto;
         }
     }
@@ -22,9 +22,13 @@
     &__textArea {
         width: calc(50% + 124px);
         min-width: 0;
+        padding: 0 0 31px 0;
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
             width: auto;
+            height: 236px;
+            padding: 0;
+            margin-bottom: 24px;
         }
     }
 
@@ -33,13 +37,15 @@
         align-self: stretch;
         height: 244px;
 
-        @media (max-width: 700px) {
+        @media (max-width: 800px) {
             width: auto;
             height: 80px;
         }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 800px) {
         flex-direction: column;
+        padding-bottom: 16px;
+        gap: 0;
     }
 }

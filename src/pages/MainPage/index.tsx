@@ -10,11 +10,20 @@ import { schema } from "../../entities/Hero/model/types";
 export default function MainPage() {
   const methods = useForm({
     resolver: yupResolver(schema),
-    mode: 'onChange',
+    mode: 'onSubmit',
     defaultValues: {
+      herosurname: '',
+      heroname: '',
+      heropatronymic: '',
+      placebirth: '',
+      herocategory: '',
+      militaryrank: '',
+      birthDateAt: '',
+      deathDateAt: '',
       surname: '',
       name: '',
       patronymic: '',
+      additionalInformation: '',
       phone: '',
       awards: [{ year: '', title: '', descriptionMilitary: '' }],
       images: [], 
@@ -42,7 +51,7 @@ export default function MainPage() {
       <Header />
       <hr className={styles.hrLine} />
       <FormProvider {...methods}>
-        <form onSubmit={methods.handleSubmit(onSubmit)}>
+        <form autoComplete="off" onSubmit={methods.handleSubmit(onSubmit)}>
           <InformationField />
           <hr className={styles.hrLine} />
           <HeroAwards 

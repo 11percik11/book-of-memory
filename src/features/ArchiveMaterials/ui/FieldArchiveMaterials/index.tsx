@@ -19,6 +19,8 @@ interface FieldArchiveMaterialsProps {
 
 export default function FieldArchiveMaterials({ value = [], onChange }: FieldArchiveMaterialsProps) {
   const [files, setFiles] = useState<FileItem[]>(value);
+  console.log(files);
+  
   const fileInputRef = useRef<HTMLInputElement>(null);
   const MAX_FILES = 10;
   const MAX_IMAGE_SIZE = 8 * 1024 * 1024; // 8MB
@@ -28,6 +30,10 @@ export default function FieldArchiveMaterials({ value = [], onChange }: FieldArc
     setFiles(value);
   }, [value]);
 
+  const isFileAlreadyAdded = (fileContent: string) => {
+    return files.some(existingFile => existingFile.image === fileContent);
+  };
+
   const onDrop = (acceptedFiles: File[]) => {
     const remainingSlots = MAX_FILES - files.length;
     if (remainingSlots <= 0) return;
@@ -35,13 +41,11 @@ export default function FieldArchiveMaterials({ value = [], onChange }: FieldArc
     const filteredFiles = acceptedFiles.slice(0, remainingSlots).filter((file) => {
       if (file.type.match('image.*')) {
         if (file.size > MAX_IMAGE_SIZE) {
-          alert(`Изображение ${file.name} слишком большое (максимум ${MAX_IMAGE_SIZE/1024/1024}MB)`);
           return false;
         }
         return true;
       } else if (file.type.match('video.*')) {
         if (file.size > MAX_VIDEO_SIZE) {
-          alert(`Видео ${file.name} слишком большое (максимум ${MAX_VIDEO_SIZE/1024/1024}MB)`);
           return false;
         }
         return true;
@@ -58,9 +62,20 @@ export default function FieldArchiveMaterials({ value = [], onChange }: FieldArc
       const reader = new FileReader();
       reader.onload = (event) => {
         if (event.target?.result) {
+          const fileContent = event.target.result as string;
+          
+          if (isFileAlreadyAdded(fileContent)) {
+            loadedCount++;
+            if (loadedCount === filteredFiles.length) {
+              setFiles(newFiles);
+              onChange?.(newFiles);
+            }
+            return;
+          }
+
           const newFile: FileItem = {
-            id: Date.now(), // временный ID
-            image: event.target.result as string,
+            id: Date.now(),
+            image: fileContent,
             imageFile: file.name,
             type: file.type.match('video.*') ? 'video' : 'image'
           };

@@ -59,7 +59,7 @@ export default function ContainerDate({ onRemove, index }: ContainerDateProps) {
           name={`awards.${index}.title`}
           options={militaryRankTitles}
           title="Название награды"
-          placeholder="Орден мужества"
+          placeholder="Нет"
           necessarilySvg
         />
         <Input

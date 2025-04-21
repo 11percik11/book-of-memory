@@ -63,7 +63,7 @@ export default function Input({
         {...register(name)}
         type={type}
         placeholder={placeholder}
-        className={`${styles.containeriInput__input}`}
+        className={`${styles.containeriInput__input}  ${error ? styles.containeriInput__input_error : ""}`}
         disabled={disabled}
         name={name}
         value={value !== undefined ? value : localValue}

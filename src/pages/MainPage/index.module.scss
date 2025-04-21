@@ -1,11 +1,16 @@
 .mainpage {
+    box-sizing: content-box;
     max-width: 1228px;
     width: 100%;
     margin: 0 auto;
     padding: 40px 32px;
 
+    @media (max-width: 1300px) {
+        box-sizing: border-box;
+    }
+
     @media (max-width: 400px) {
-        padding: 0 16px;
+        padding: 80px 16px;
     }
 }
 

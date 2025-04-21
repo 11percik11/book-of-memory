@@ -1,22 +1,17 @@
 .containerDateSendler {
-    width: 100%;
-    margin-bottom: 16px;
-    
-    &__box {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
+  width: 100%;
+
+  &__box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0px 20px;
+
+    @media (max-width: 1000px) {
+      grid-template-columns: repeat(2, 1fr);
     }
-    
-    &__input {
-        flex: 1 0 calc(33% - 40px);
-        
-        &:last-child{
-          max-width: calc(33% - 10px);
-          
-          @media (max-width: 835px) {
-              max-width: none;
-          }
-        }  
+
+    @media (max-width: 700px) {
+      grid-template-columns: repeat(1, 1fr);
     }
+  }
 }

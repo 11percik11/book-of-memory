@@ -1,5 +1,13 @@
 .sendlerInformation {
     display: flex;
     flex-direction: column;
-    gap: 32px;
+    // gap: 32px;
+
+    &__title {
+        margin-bottom: 39px;
+    }
+
+    &__container {
+        margin-bottom: 16px;
+    }
 }

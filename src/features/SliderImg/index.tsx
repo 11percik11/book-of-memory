@@ -18,10 +18,6 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ className, value = [], onChan
   const [images, setImages] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // useEffect(() => {
-  //   setImages(value.map(item => item.image));
-  // }, [value]);
-  
   const onDrop = (acceptedFiles: File[]) => {
     if (images.length + acceptedFiles.length > maxImgValue) {
       return;
@@ -35,27 +31,33 @@ const ImageSlider: React.FC<ImageSliderProps> = ({ className, value = [], onChan
 
     const newImages = [...images];
     const newImageObjects = [...value];
-    let loadedCount = 0;
     
-    imageFiles.forEach(file => {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        if (event.target?.result) {
-          const imageUrl = event.target.result as string;
-          newImages.push(imageUrl);
-          newImageObjects.push({
-            image: imageUrl,
-            imageFile: file.name
-          });
-          loadedCount++;
-          if (loadedCount === imageFiles.length) {
-            setImages(newImages);
-            setCurrentIndex(newImages.length - 1);
-            onChange?.(newImageObjects);
+    const promises = imageFiles.map(file => {
+      return new Promise<void>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          if (event.target?.result) {
+            const imageUrl = event.target.result as string;
+            if (!newImages.includes(imageUrl)) {
+              newImages.push(imageUrl);
+              newImageObjects.push({
+                image: imageUrl,
+                imageFile: file.name
+              });
+            }
           }
-        }
-      };
-      reader.readAsDataURL(file);
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    });
+
+    Promise.all(promises).then(() => {
+      if (newImages.length > images.length) {
+        setImages(newImages);
+        setCurrentIndex(newImages.length - 1);
+        onChange?.(newImageObjects);
+      }
     });
   };
 

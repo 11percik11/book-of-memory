@@ -9,12 +9,16 @@
     &__input {
         color: black;
         font-size: 16px;
-        height: 64px;
+        height: 62px;
         background: none;
         border-radius: $btn-border-radius;
         border: 1px solid $text-color-silver;
         padding: 0 20px;
     
+        &_error {
+            border: 1px solid #E60004;
+        }
+        
         &::placeholder {
             color: $text-color-silver_white;
             opacity: 1;

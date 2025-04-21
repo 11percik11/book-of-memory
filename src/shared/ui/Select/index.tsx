@@ -7,7 +7,6 @@ import { FieldError, useFormContext } from "react-hook-form";
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function getNestedError(obj: any, path: string): FieldError | undefined {
   return path.split('.').reduce((acc, part) => {
-    // Обработка массивов типа awards.0.year
     const arrayMatch = part.match(/(\w+)\[(\d+)\]/);
     if (arrayMatch) {
       const arrayName = arrayMatch[1];
@@ -24,17 +23,19 @@ interface SelectProps {
   onSelect?: (selectedOption: string) => void;
   className?: string;
   name: string;
+  errorSelect?: string;
   title?: string;
   necessarilySvg?: boolean;
-  showInput?: boolean;
+  showInput?: boolean; // New prop to control input visibility
 }
 
 const Select: React.FC<SelectProps> = ({
   options,
-  placeholder = "Select...",
+  placeholder = "Выберите данные...",
   onSelect,
   className,
   name,
+  errorSelect,
   title,
   necessarilySvg = false,
   showInput = true,
@@ -45,28 +46,32 @@ const Select: React.FC<SelectProps> = ({
     setValue,
     watch
   } = useFormContext();
-  
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const selectRef = useRef<HTMLDivElement>(null);
   const formValue = watch(name);
-
+  const error = getNestedError(errors, name) as FieldError | undefined; 
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleOptionClick = (option: string) => {
+    setSelectedOption(option);
     setValue(name, option, { shouldValidate: true });
     setIsOpen(false);
     if (onSelect) onSelect(option);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setValue(name, value, { shouldValidate: true });
-    if (onSelect) onSelect(value);
+    setSelectedOption(e.target.value);
+    setValue(name, e.target.value, { shouldValidate: true });
+    if (onSelect) onSelect(e.target.value);
   };
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (selectRef.current && !selectRef.current.contains(event.target as Node)) {
+      if (
+        selectRef.current &&
+        !selectRef.current.contains(event.target as Node)
+      ) {
         setIsOpen(false);
       }
     };
@@ -77,16 +82,12 @@ const Select: React.FC<SelectProps> = ({
     };
   }, []);
 
-  const error = getNestedError(errors, name) as FieldError | undefined;
 
   return (
     <div className={`${styles.boxSelect} ${className}`}>
-      {title && <Title text={title} necessarilySvg={necessarilySvg} />}
+      {title ? <Title text={title} necessarilySvg={necessarilySvg} /> : <></>}
       <div className={`${styles.selectContainer}`} ref={selectRef}>
-        <div 
-          className={`${styles.selectHeader} ${!formValue ? styles.selectPlacholder : ""}`} 
-          onClick={toggleDropdown}
-        >
+        <div className={`${styles.selectHeader} ${error ? styles.selectHeader__error : ""} ${!selectedOption ? styles.selectPlacholder : ""}`} onClick={toggleDropdown}>
           {showInput ? (
             <input 
               {...register(name)}
@@ -102,7 +103,7 @@ const Select: React.FC<SelectProps> = ({
             />
           ) : (
             <div className={styles.boxSelect__display}>
-              {formValue || placeholder}
+              {selectedOption || placeholder}
             </div>
           )}
           <span className={`${styles.arrow} ${isOpen ? styles.open : ""}`}>
@@ -112,13 +113,7 @@ const Select: React.FC<SelectProps> = ({
         {isOpen && (
           <div className={styles.selectList}>
             <div className={styles.optionsContainer}>
-              <div 
-                key={0} 
-                onClick={() => handleOptionClick('')} 
-                className={styles.optionPlaceholder}
-              >
-                {placeholder}
-              </div>
+              <div key={0} onClick={() => handleOptionClick('')} className={styles.optionPlaceholder}>{placeholder}</div>
               {options.map((option, index) => (
                 <div
                   key={index + 1}
@@ -131,11 +126,12 @@ const Select: React.FC<SelectProps> = ({
             </div>
           </div>
         )}
-        {error && (
-          <span className={styles.boxSelect__error}>
-            {error.message}
-          </span>
-        )}
+      {errorSelect ? <div className={styles.boxSelect__error}>{errorSelect}</div> : <></> }
+      {error && (
+        <span className={styles.boxSelect__error}>
+          {error.message}
+        </span>
+      )}
       </div>
     </div>
   );

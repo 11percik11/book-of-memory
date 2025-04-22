@@ -5,7 +5,7 @@ import { Button } from '../../shared/ui';
 import plus_svg from '../../shared/assets/svg/plus.svg';
 
 interface Fields {
-  id: string;
+  // id: string;
   year: string;
   title: string;
   descriptionMilitary: string
@@ -29,7 +29,7 @@ export default function HeroAwards({fields, onRemove, onAppend}: HeroAwardsProps
       
       {fields.map((field, index) => (
         <ContainerDate 
-          key={field.id}
+          key={index}
           onRemove={() => onRemove(index)}
           index={index}
         />

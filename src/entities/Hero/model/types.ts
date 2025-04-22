@@ -161,81 +161,92 @@ export interface heroAwardAll {
   title: string;
 }
 
-const regExpPhone: RegExp = new RegExp(/^\+?[1-9][0-9]{7,14}$/)
-const regExpLetters: RegExp = new RegExp(/^[a-zA-Zа-яА-ЯёЁ\s]+$/)
+const regExpPhone: RegExp = new RegExp(/^\+?[1-9][0-9]{7,14}$/);
+const regExpLetters: RegExp = new RegExp(/^[a-zA-Zа-яА-ЯёЁ\s]+$/);
 
 export const schema = yup.object().shape({
-  herosurname: yup.string()
-  .required('Фамилия обязательна')
-  .matches(regExpLetters, 'Не должно содержать цифр и спецсимволов'),
-  heroname: yup.string()
-  .required('Имя обязательно')
-  .matches(regExpLetters, 'Не должно содержать цифр и спецсимволов'),
-  heropatronymic: yup.string()
-  .test('patronymic', 'Не должно содержать цифр и спецсимволов', 
-    (v) => !v?.trim() || regExpLetters.test(v))
-  .nullable()
-  .notRequired(),
+  herosurname: yup
+    .string()
+    .required("Фамилия обязательна")
+    .matches(regExpLetters, "Не должно содержать цифр и спецсимволов"),
+  heroname: yup
+    .string()
+    .required("Имя обязательно")
+    .matches(regExpLetters, "Не должно содержать цифр и спецсимволов"),
+  heropatronymic: yup
+    .string()
+    .test(
+      "patronymic",
+      "Не должно содержать цифр и спецсимволов",
+      (v) => !v?.trim() || regExpLetters.test(v)
+    )
+    .nullable()
+    .notRequired(),
   placebirth: yup.string(),
-  herocategory: yup.string()
-  .required('Год обязателен'),
+  herocategory: yup.string().required("Категория обязательна"),
   militaryrank: yup.string(),
   birthDateAt: yup.string(),
   deathDateAt: yup.string(),
-  
+
   images: yup.array().of(
     yup.object().shape({
       id: yup.number(),
       image: yup.string(),
-      applicationForm: yup.string().url('Должна быть валидная ссылка'),
-      imageFile: yup.string()
+      applicationForm: yup.string().url("Должна быть валидная ссылка"),
+      imageFile: yup.string(),
     })
   ),
   archive: yup.array().of(
     yup.object().shape({
       id: yup.number(),
       image: yup.string(),
-      applicationForm: yup.string().url('Должна быть валидная ссылка'),
-      imageFile: yup.string()
+      applicationForm: yup.string().url("Должна быть валидная ссылка"),
+      imageFile: yup.string(),
     })
   ),
 
-  surname: yup.string()
-  .required('Фамилия обязательна')
-  .matches(regExpLetters, 'Не должно содержать цифр и спецсимволов'),
-  name: yup.string()
-  .required('Имя обязательно')
-  .matches(regExpLetters, 'Не должно содержать цифр и спецсимволов'),
-  patronymic: yup.string()
-  .test('patronymic', 'Не должно содержать цифр и спецсимволов', 
-    (v) => !v?.trim() || regExpLetters.test(v))
-  .nullable()
-  .notRequired(),
-  phone: yup.string()
-    .required('Телефон обязателен')
-    .min(11, 'Номер телефона слишком короткий (должно быть 11 символов)')
-    .max(11, 'Номер телефона слишком длинный (должно быть 11 символов)')
-    .matches(regExpPhone, 'Неверный формат телефона'),
-    organization: yup.string()
-    .required('Организация обязателена'),   
+  surname: yup
+    .string()
+    .required("Фамилия обязательна")
+    .matches(regExpLetters, "Не должно содержать цифр и спецсимволов"),
+  name: yup
+    .string()
+    .required("Имя обязательно")
+    .matches(regExpLetters, "Не должно содержать цифр и спецсимволов"),
+  patronymic: yup
+    .string()
+    .test(
+      "patronymic",
+      "Не должно содержать цифр и спецсимволов",
+      (v) => !v?.trim() || regExpLetters.test(v)
+    )
+    .nullable()
+    .notRequired(),
+  phone: yup
+    .string()
+    .required("Телефон обязателен")
+    .min(11, "Номер телефона слишком короткий (должно быть 11 символов)")
+    .max(11, "Номер телефона слишком длинный (должно быть 11 символов)")
+    .matches(regExpPhone, "Неверный формат телефона"),
+  organization: yup.string().required("Организация обязателена"),
   awards: yup.array().of(
     yup.object().shape({
-      year: yup.string()
-    .required('Год обязателен')
-    .matches(/^\d{4}$/, 'Год должен состоять из 4 цифр')
-    .test(
-        'min-year',
-        'Год не может быть меньше 1900',
-        (value) => parseInt(value, 10) >= 1900
-    )
-    .test(
-        'max-year',
-        'Год не может быть в будущем',
-        (value) => parseInt(value, 10) <= new Date().getFullYear()
-    ),
-      title: yup.string()
-      .required('Название награды обязательно'),
-      descriptionMilitary: yup.string()
+      year: yup
+        .string()
+        .required("Год обязателен")
+        .matches(/^\d{4}$/, "Год должен состоять из 4 цифр")
+        .test(
+          "min-year",
+          "Год не может быть меньше 1900",
+          (value) => parseInt(value, 10) >= 1900
+        )
+        .test(
+          "max-year",
+          "Год не может быть в будущем",
+          (value) => parseInt(value, 10) <= new Date().getFullYear()
+        ),
+      title: yup.string().required("Название награды обязательно"),
+      descriptionMilitary: yup.string(),
     })
   ),
   additionalInformation: yup.string(),

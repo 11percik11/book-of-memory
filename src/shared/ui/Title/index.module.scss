@@ -8,12 +8,74 @@
     display: flex;
     gap: 16px;
 
-    &__Svg {
+    &__crossSvg {
         width: 11px;
         margin-bottom: 10px;
     }
+
+    &__signSvg {
+        cursor: pointer;
+    }
+
+    &__tooltipContainer {
+        margin-left: auto;
+        position: relative;
+        display: inline-block;
+    }
+
+    &__tooltip {
+        position: absolute;
+        width: 396px;
+        padding: 24px;
+        height: auto;
+        top: 50px;
+        right: -10px;
+        background: #2B2A29;
+        color: white;
+        border-radius: 4px;
+        font-size: 14px;
+        // white-space: nowrap;
+        z-index: 100;
+        margin-bottom: 5px;
+        
+        &::after {
+          content: '';
+          position: absolute;
+          top: -22px;
+          right: 14px;
+          border-width: 11px;
+          border-style: solid;
+          border-color: transparent transparent #2B2A29 transparent;
+        }
+      }
 
     @media (max-width: 960px) {
         font-size: 20px;
     }
 }
+  
+  .tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 100;
+    margin-bottom: 5px;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 5px;
+      border-style: solid;
+      border-color: #333 transparent transparent transparent;
+    }
+  }
